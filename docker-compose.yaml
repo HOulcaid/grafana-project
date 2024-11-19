@@ -1,29 +1,56 @@
-version: "3"
+version: "3"  
 
+# Persistent storage 
 volumes:
   prometheus_data: {}
   grafana_data: {}
 
-services:
+# Bridge network
+networks:
+  monitoring:
+    driver: bridge
 
-## Prometheus
+services:
+  ## Prometheus Service
   prometheus:
     image: prom/prometheus
     container_name: prometheus
     restart: always
     ports:
       - 9090:9090
+    networks:
+      - monitoring
     volumes:
-      - ./prometheus:/etc/prometheus/prometheus.yaml
+      - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yaml
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yaml"  # Explicitly specify config file
+      - "--storage.tsdb.path=/prometheus"                # Path to store data
+      - "--web.enable-lifecycle"                         # Enable HTTP-based reload triggers
+    healthcheck:  # Add a health check to ensure the service is running
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:9090/-/ready || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
-
-## Grafana
+  ## Grafana Service
   grafana:
     image: grafana/grafana
+    container_name: grafana
+    restart: always
     ports:
       - 3000:3000
-    container_name: grafana
+    networks:
+      - monitoring
+    volumes:
+      - grafana_data:/var/lib/grafana
+    env_file: # creds file
+      - ./grafana/grafana.config
     depends_on:
       - prometheus
-    env_file:
-      - ./grafana/config.monitoring
+    healthcheck:  # Health check to ensure Grafana is ready
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:3000/login || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
