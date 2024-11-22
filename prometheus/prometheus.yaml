@@ -24,3 +24,9 @@ scrape_configs:
       insecure_skip_verify: true  # Skip SSL verification
     static_configs:
 #      - targets: ['X.X.X.X:9100']      # Add an endpoint to monitor
+
+  - job_name: 'Loki'
+    tls_config:
+      insecure_skip_verify: true  # Skip SSL verification
+    static_configs:
+        - targets: ['loki:3100']
