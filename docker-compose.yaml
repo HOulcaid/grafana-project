@@ -4,6 +4,9 @@ version: "3"
 volumes:
   prometheus_data: {}
   grafana_data: {}
+  rancher_data: {}
+  loki_data: {}
+  promtail_data: {}
 
 # Bridge network
 networks:
@@ -74,3 +77,18 @@ services:
     networks:
       - monitoring
 
+
+## Rancher service
+  rancher:
+    image: rancher/rancher:latest
+    restart: unless-stopped
+    container_name: rancher
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./rancher/rancher:/var/lib/rancher
+      - ./rancher/rancher_data:/var/lib/rancher_data
+    privileged: true
+    networks:
+      - monitoring
