@@ -80,7 +80,7 @@ services:
 
 ## Rancher service
   rancher:
-    image: rancher/rancher:latest
+    image: rancher/rancher:stable
     restart: unless-stopped
     container_name: rancher
     ports:
@@ -88,7 +88,6 @@ services:
       - "443:443"
     volumes:
       - ./rancher/rancher:/var/lib/rancher
-      - ./rancher/rancher_data:/var/lib/rancher_data
     privileged: true
     networks:
       - monitoring

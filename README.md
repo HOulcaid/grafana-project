@@ -4,7 +4,6 @@
 ### Installation
 
 With this command you will have a prometheus and grafana : 
-
 > **sudo docker-compose up -d**
 
 
@@ -24,3 +23,12 @@ You can visit the catalog here for dashboards : `https://grafana.com/grafana/das
 
 The add of loki and promtail :
 To connect Loki to grafana you'll have to add the data source with the URL : `http://loki:3100`.
+
+
+#### v2.1.0
+
+The add of Rancher : 
+To connect to Rancher go the the localhost : `http://localhost`
+
+You will need to recover the password from the logs using this command : 
+> **docker logs rancher 2>&1 | grep "Bootstrap Password"**
