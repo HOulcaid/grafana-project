@@ -32,3 +32,13 @@ To connect to Rancher go the the localhost : `http://localhost`
 
 You will need to recover the password from the logs using this command : 
 > **docker logs rancher 2>&1 | grep "Bootstrap Password"**
+
+to watch the logs :
+> **docker logs -f rancher**
+
+
+
+# Tips :
+
+To restart the installation, it is better to tear down everything and remove volumes :
+> **docker-compose down -v**
