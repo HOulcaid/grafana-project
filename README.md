@@ -1,13 +1,13 @@
 # grafana-project
 
 
-### Installation
+# Installation
 
 With this command you will have a prometheus and grafana : 
 > **sudo docker-compose up -d**
 
 
-### Test 
+# Test 
 
 Then you can access Prometheus at `http://localhost:9090` and Grafana at `http://localhost:3000`.
 
@@ -19,13 +19,13 @@ To connect prometheus to grafana you'll have to add the data source with the URL
 You can visit the catalog here for dashboards : `https://grafana.com/grafana/dashboards/`
 
 
-#### v2.0.0
+### v2.0.0
 
 The add of loki and promtail :
 To connect Loki to grafana you'll have to add the data source with the URL : `http://loki:3100`.
 
 
-#### v2.1.0
+### v2.1.0
 
 The add of Rancher : 
 To connect to Rancher go the the localhost : `http://localhost`
@@ -38,7 +38,7 @@ to watch the logs :
 
 
 
-# Tips :
+#### Tips :
 
 To restart the installation, it is better to tear down everything and remove volumes :
 > **docker-compose down -v**
