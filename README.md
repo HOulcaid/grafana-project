@@ -42,3 +42,9 @@ to watch the logs :
 
 To restart the installation, it is better to tear down everything and remove volumes :
 > **docker-compose down -v**
+
+If You can't get the password with the command : 
+> **sudo docker logs rancher  2>&1 | grep "Bootstrap Password:"**
+
+It is better to reset it with :
+> **sudo docker exec -it rancher reset-password**
