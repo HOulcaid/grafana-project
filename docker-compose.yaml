@@ -103,7 +103,7 @@ services:
     restart: always
     networks:
       - monitoring
-      - default 
+      - default # to allow rancher to communicate with Traefik
 
 
 ## Rancher service
@@ -125,4 +125,4 @@ services:
       - "traefik.http.services.rancher.loadbalancer.server.port=443"
     networks:
       - monitoring
-      - default 
+      - default # to allow rancher to communicate with Traefik
