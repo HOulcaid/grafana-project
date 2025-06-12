@@ -36,6 +36,11 @@ You will need to recover the password from the logs using this command :
 to watch the logs :
 > **docker logs -f rancher**
 
+### v2.1.1
+
+The Add of Traefik in order to use a domain with valid SSL certificate.
+Minor updates needed.
+
 
 
 #### Tips :

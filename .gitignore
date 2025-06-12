@@ -1,0 +1,5 @@
+# Ignore Rancher and k3s runtime artifacts
+rancher/rancher/k3s/agent/
+rancher/rancher/k3s/server/
+*.snapshots/
+*.overlayfs/

@@ -1,0 +1,25 @@
+advertise-client-urls: https://172.19.0.3:2379
+client-transport-security:
+  cert-file: /var/lib/rancher/k3s/server/tls/etcd/server-client.crt
+  client-cert-auth: true
+  key-file: /var/lib/rancher/k3s/server/tls/etcd/server-client.key
+  trusted-ca-file: /var/lib/rancher/k3s/server/tls/etcd/server-ca.crt
+data-dir: /var/lib/rancher/k3s/server/db/etcd
+election-timeout: 5000
+experimental-initial-corrupt-check: true
+experimental-watch-progress-notify-interval: 5000000000
+heartbeat-interval: 500
+listen-client-http-urls: https://127.0.0.1:2382
+listen-client-urls: https://127.0.0.1:2379,https://172.19.0.3:2379
+listen-metrics-urls: http://127.0.0.1:2381
+listen-peer-urls: https://127.0.0.1:2380,https://172.19.0.3:2380
+log-outputs:
+- stderr
+logger: zap
+name: b9413feb53ca-37e0027d
+peer-transport-security:
+  cert-file: /var/lib/rancher/k3s/server/tls/etcd/peer-server-client.crt
+  client-cert-auth: true
+  key-file: /var/lib/rancher/k3s/server/tls/etcd/peer-server-client.key
+  trusted-ca-file: /var/lib/rancher/k3s/server/tls/etcd/peer-ca.crt
+snapshot-count: 10000

@@ -60,6 +60,7 @@ services:
 ## Loki Service
   loki:
     image: grafana/loki:latest
+    container_name: loki
     ports:
       - "3100:3100"
     command: -config.file=/etc/loki/local-config.yaml    
@@ -78,16 +79,50 @@ services:
       - monitoring
 
 
+## Traefik Service
+  traefik:
+    image: traefik:v2.11
+    container_name: traefik
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.letsencrypt.acme.email=hassan@oulcaid.com"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/acme.json"
+      - "--api.dashboard=true"
+      - "--entrypoints.traefik.address=:8080"
+    ports:
+      - "8080:8080"
+    volumes:
+      - "./traefik/traefik.yml:/traefik.yml:ro"
+      - "./traefik/acme.json:/acme.json"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    restart: always
+    networks:
+      - monitoring
+      - default 
+
+
 ## Rancher service
   rancher:
-    image: rancher/rancher:stable
+    image: rancher/rancher:latest
     restart: unless-stopped
     container_name: rancher
-    ports:
-      - "80:80"
-      - "443:443"
+    expose:
+      - "80"
+      - "443"
     volumes:
       - ./rancher/rancher:/var/lib/rancher
     privileged: true
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.rancher.rule=Host(`rancher.oulcaid.com`)"
+      - "traefik.http.routers.rancher.entrypoints=websecure"
+      - "traefik.http.routers.rancher.tls.certresolver=letsencrypt"
+      - "traefik.http.services.rancher.loadbalancer.server.port=443"
     networks:
       - monitoring
+      - default 
